@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <title>ExpenseTracker</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Expense Tracker</h1>
+    </div>
+    
+    <div class="container mt-5">
+        <form id="myForm">
+            <div class="form-group">
+                <label for="expenseAmount">Choose Expense Amount:</label>
+                <input type="number" class="form-control" id="expenseAmount" placeholder="Enter expense amount" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description(no-space):</label>
+                <input type="text" class="form-control" id="description" placeholder="Enter description" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Choose a Category:</label>
+                <select class="form-control" id="category">
+                    <option value="movie">Movie</option>
+                    <option value="food">Food</option>
+                    <option value="fuel">Fuel</option>
+                    <option value="others">Others</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Expense</button>
+        </form>
+    </div>
+    <div id="expenseList" class="mt-4">
+        <h2>Expense List</h2>
+        <div>
+            <ul id="items" class="list-group"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
