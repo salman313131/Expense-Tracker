@@ -1,5 +1,6 @@
 
 const myForm = document.getElementById('myForm')
+const items = document.getElementById('items')
 myForm.addEventListener('submit',onSumbit)
 
 function onSumbit(e){
@@ -13,3 +14,24 @@ function onSumbit(e){
     .catch((err)=>console.log(err))  
 }
 
+document.addEventListener('DOMContentLoaded',()=>{
+    axios.get("https://crudcrud.com/api/31d769a06b2a483495145273fdfab0de/user")
+    .then(res=>{
+        for(var i=0;i<res.data.length;i++){
+            showOutput(res.data[i])
+        }
+    })
+    .catch(err=>console.log(err))
+})
+function showOutput(user){
+    
+    const newLi = document.createElement('li')
+    newLi.appendChild(document.createTextNode(`${user.expenseAmount} ${user.description} ${user.category}`))
+    const delBtn = document.createElement('button')
+    delBtn.innerHTML = 'Delete'
+    const editBtn = document.createElement('edit')
+    editBtn.innerHTML = 'Edit'
+    newLi.appendChild(editBtn)
+    newLi.appendChild(delBtn)
+    items.appendChild(newLi)
+}
