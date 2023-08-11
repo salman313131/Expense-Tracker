@@ -11,7 +11,7 @@ function onSumbit(e){
     const category = document.getElementById("category").value;
     const userData = {expenseAmount,description,category}
     axios.post("https://crudcrud.com/api/31d769a06b2a483495145273fdfab0de/user",userData)
-    .then((res)=>console.log(res))
+    .then((res)=>showOutput(res.data))
     .catch((err)=>console.log(err))  
 }
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 function showOutput(user){
     
     const newLi = document.createElement('li')
-    newLi.appendChild(document.createTextNode(`${user.expenseAmount} ${user.description} ${user.category}`))
+    newLi.appendChild(document.createTextNode(`${user._id} ${user.expenseAmount} ${user.description} ${user.category}`))
     const delBtn = document.createElement('button')
     delBtn.classList.add('delete')
     delBtn.innerHTML = 'Delete'
@@ -41,18 +41,25 @@ function showOutput(user){
 function onDelete(e){
     if(e.target.classList.contains('delete')){
     const li = e.target.parentElement;
-    const data = li.innerHTML.split(" ")
-    axios.get("https://crudcrud.com/api/31d769a06b2a483495145273fdfab0de/user")
-    .then(res=>{
-        for(var i=0;i<res.data.length;i++){
-            const dummy = res.data[i]
-            if(dummy.description===data[1]){
-                axios.delete(`https://crudcrud.com/api/31d769a06b2a483495145273fdfab0de/user/${dummy._id}`)
-                .then(res=>console.log(res))
-                .catch(err=>console.log(err))
-            }
-        }
-    }).catch(err=>console.log(err))
-    items.removeChild(li)
+    const data = li.textContent.split(" ")
+
+    axios.delete(`https://crudcrud.com/api/31d769a06b2a483495145273fdfab0de/user/${data[0]}`)
+    .then(res=>items.removeChild(li)).catch(err=>console.log(err))
+    }
+    if(e.target.classList.contains('edit')){
+        const li = e.target.parentElement;
+        const data = li.textContent.split(" ")
+        axios.get(`https://crudcrud.com/api/31d769a06b2a483495145273fdfab0de/user/${data[0]}`)
+        .then(res=>{
+            const expenseAmount = document.getElementById("expenseAmount");
+            expenseAmount.value = res.data.expenseAmount
+            const description = document.getElementById("description");
+            description.value = res.data.description
+            const category = document.getElementById("category").value;
+            category.value = res.data.category
+            axios.delete(`https://crudcrud.com/api/31d769a06b2a483495145273fdfab0de/user/${res.data._id}`)
+            .then(res=>items.removeChild(li)).catch(err=>console.log(err))
+        })
+        .catch(err=>console.log(err))
     }
 }
